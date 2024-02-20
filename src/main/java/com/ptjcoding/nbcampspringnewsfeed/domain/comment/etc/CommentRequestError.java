@@ -30,12 +30,11 @@ public enum CommentRequestError {
     private static final String PARENTCOMMENTIDSTRING = "부모 댓글의 Id는";
 
     private static final String BLANK = "필수입니다.";
-    private static final String MAX_LENGTH = "500글자를 초과할 수 없습니다.";
-    private static final String POSITIVE = "양수 값이어야 합니다.";
-
     public static final String CONTENT_BLANK = CONTENT + BLANK;
     public static final String POSTID_BLANK = POSTID + BLANK;
+    private static final String MAX_LENGTH = "500글자를 초과할 수 없습니다.";
     public static final String CONTENT_MAX_LENGTH = CONTENT + MAX_LENGTH;
+    private static final String POSITIVE = "양수 값이어야 합니다.";
     public static final String POSTID_POSITIVE = POSTID + POSITIVE;
     public static final String PARENTCOMMENTIDSTRING_POSITIVE = PARENTCOMMENTIDSTRING + POSITIVE;
 

@@ -17,4 +17,5 @@ public class LoginRequestDto {
   @Pattern(regexp = "^(?=.*[a-z]).+$")
   @Pattern(regexp = "^(?=.*[A-Z]).+$")
   private String password;
+
 }

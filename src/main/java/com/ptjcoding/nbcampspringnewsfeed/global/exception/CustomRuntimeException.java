@@ -15,4 +15,5 @@ public class CustomRuntimeException extends RuntimeException {
   public String getMessage() {
     return String.format("[RUNTIME ERROR] %s", code.getMessage());
   }
+
 }

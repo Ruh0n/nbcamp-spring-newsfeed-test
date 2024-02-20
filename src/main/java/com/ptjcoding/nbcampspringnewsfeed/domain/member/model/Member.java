@@ -20,4 +20,5 @@ public class Member {
   public boolean isRole(MemberRole memberRole) {
     return role.getAuthority().equals(memberRole.getAuthority());
   }
+
 }

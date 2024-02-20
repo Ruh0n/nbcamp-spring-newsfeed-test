@@ -93,4 +93,5 @@ public class PostEntity extends Timestamped {
         .deletedDate(this.getDeletedDate())
         .build();
   }
+
 }

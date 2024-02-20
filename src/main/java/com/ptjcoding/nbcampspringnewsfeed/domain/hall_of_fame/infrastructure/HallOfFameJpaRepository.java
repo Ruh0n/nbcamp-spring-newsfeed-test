@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface HallOfFameJpaRepository extends JpaRepository<HallOfFameEntity, Long> {
 
   List<HallOfFameEntity> findAllByOrderByVoteCountDesc();
+
 }

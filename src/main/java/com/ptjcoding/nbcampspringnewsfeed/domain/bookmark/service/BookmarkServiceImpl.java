@@ -57,4 +57,5 @@ public class BookmarkServiceImpl implements BookmarkService {
     Post post = postRepository.findPostOrElseThrow(postId);
     bookmarkRepository.deleteBookmark(post.getPostId(), member.getId());
   }
+
 }

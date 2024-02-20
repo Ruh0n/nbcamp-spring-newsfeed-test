@@ -14,4 +14,5 @@ public class MemberResponseDto {
     this.email = email;
     this.nickname = nickname;
   }
+
 }

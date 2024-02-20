@@ -27,4 +27,5 @@ public class HallOfFameEntity {
   public void update(Long voteCount) {
     this.voteCount = voteCount;
   }
+
 }

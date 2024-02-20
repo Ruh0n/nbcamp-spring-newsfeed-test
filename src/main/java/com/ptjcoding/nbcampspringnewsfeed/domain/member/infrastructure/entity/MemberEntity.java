@@ -46,14 +46,6 @@ public class MemberEntity extends Timestamped {
   @Enumerated(value = EnumType.STRING)
   private MemberRole role;
 
-  public void update(NicknameUpdateDto dto) {
-    this.nickname = dto.getNickname();
-  }
-
-  public boolean isCurrentName(String nickname) {
-    return this.nickname.equals(nickname);
-  }
-
   public static MemberEntity of(String email, String nickname, String password, MemberRole role) {
 
     return MemberEntity.builder()
@@ -62,6 +54,14 @@ public class MemberEntity extends Timestamped {
         .password(password)
         .role(role)
         .build();
+  }
+
+  public void update(NicknameUpdateDto dto) {
+    this.nickname = dto.getNickname();
+  }
+
+  public boolean isCurrentName(String nickname) {
+    return this.nickname.equals(nickname);
   }
 
   public Member toModel() {
@@ -74,4 +74,5 @@ public class MemberEntity extends Timestamped {
         .role(role)
         .build();
   }
+
 }

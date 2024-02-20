@@ -12,4 +12,5 @@ public interface BookmarkService {
   List<BookmarkResponseDto> getBookmarksByMemberId(Long memberId);
 
   void deleteBookmark(Long postId, Long memberId);
+
 }

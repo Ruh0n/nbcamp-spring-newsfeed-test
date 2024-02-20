@@ -15,4 +15,5 @@ public class PostRequestDto {
   @NotBlank
   @Length(max = 500)
   private String content;
+
 }

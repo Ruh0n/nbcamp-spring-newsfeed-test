@@ -16,4 +16,5 @@ public interface BookmarkJpaRepository extends JpaRepository<BookmarkEntity, Lon
   void deleteByPostId(Long postId);
 
   void deleteByMemberId(Long memberId);
+
 }

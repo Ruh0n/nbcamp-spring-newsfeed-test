@@ -59,4 +59,5 @@ public class HallOfFameRepositoryImpl implements HallOfFameRepository {
 
     hallOfFameJpaRepository.delete(hallOfFameEntity.get());
   }
+
 }

@@ -25,4 +25,5 @@ public class BookmarkResponseDto {
         .markedDate(bookmark.getMarkedDate())
         .build();
   }
+
 }

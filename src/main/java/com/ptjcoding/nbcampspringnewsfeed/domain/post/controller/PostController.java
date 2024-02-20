@@ -78,4 +78,5 @@ public class PostController {
     postService.deletePost(postId, member.getId());
     return CommonResponseDto.ok(GlobalSuccessCode.DELETE, null);
   }
+
 }

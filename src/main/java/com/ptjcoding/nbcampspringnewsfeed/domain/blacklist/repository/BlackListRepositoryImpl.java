@@ -34,4 +34,5 @@ public class BlackListRepositoryImpl implements BlackListRepository {
   public boolean checkEmail(String email) {
     return blackListJpaRepository.findByEmail(email).isPresent();
   }
+
 }

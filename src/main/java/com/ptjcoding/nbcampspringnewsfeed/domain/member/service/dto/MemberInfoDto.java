@@ -24,4 +24,5 @@ public class MemberInfoDto {
         .commentList(commentList)
         .build();
   }
+
 }

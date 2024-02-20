@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepository {
+
   private final PostJpaRepository postJpaRepository;
 
   @Override
@@ -94,4 +95,5 @@ public class PostRepositoryImpl implements PostRepository {
         () -> new CustomRuntimeException(GlobalErrorCode.NOT_FOUND)
     );
   }
+
 }

@@ -25,4 +25,5 @@ public class MemberSignupDto {
       throw new CustomRuntimeException(GlobalErrorCode.NOT_EQUAL);
     }
   }
+
 }

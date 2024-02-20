@@ -78,4 +78,5 @@ public class MemberRepositoryImpl implements MemberRepository {
         EntityNotFoundException::new
     );
   }
+
 }
