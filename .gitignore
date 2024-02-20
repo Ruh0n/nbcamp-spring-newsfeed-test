@@ -45,3 +45,5 @@ out/
 
 ### DB env ###
 /**/src/main/resources/db.properties
+
+.jqwik-database
