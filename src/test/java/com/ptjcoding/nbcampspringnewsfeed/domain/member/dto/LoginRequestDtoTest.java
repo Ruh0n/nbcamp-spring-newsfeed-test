@@ -3,6 +3,7 @@ package com.ptjcoding.nbcampspringnewsfeed.domain.member.dto;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.ptjcoding.nbcampspringnewsfeed.domain.common.Test_Values;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -13,13 +14,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.test.util.ReflectionTestUtils;
 
 @DisplayName("LoginRequestDto 테스트")
-class LoginRequestDtoTest {
+class LoginRequestDtoTest extends Test_Values {
 
-  private static final String validPassword = "Password123";
-  private static final String validEmail = "example@email.com";
   private static Validator validator;
 
   @BeforeAll
@@ -35,9 +33,7 @@ class LoginRequestDtoTest {
     @DisplayName("성공")
     void success() {
       // given
-      LoginRequestDto loginRequestDto = new LoginRequestDto();
-      ReflectionTestUtils.setField(loginRequestDto, "email", validEmail);
-      ReflectionTestUtils.setField(loginRequestDto, "password", validPassword);
+      LoginRequestDto loginRequestDto = new LoginRequestDto(VALID_EMAIL, VALID_PASSWORD);
 
       // when
       Set<ConstraintViolation<LoginRequestDto>> violations = validator.validate(loginRequestDto);
@@ -58,9 +54,7 @@ class LoginRequestDtoTest {
     @DisplayName("이메일 실패")
     void emailFailure_Blank(String email) {
       // given
-      LoginRequestDto loginRequestDto = new LoginRequestDto();
-      ReflectionTestUtils.setField(loginRequestDto, "email", email);
-      ReflectionTestUtils.setField(loginRequestDto, "password", validPassword);
+      LoginRequestDto loginRequestDto = new LoginRequestDto(email, VALID_PASSWORD);
 
       // when
       Set<ConstraintViolation<LoginRequestDto>> violations = validator.validate(loginRequestDto);
@@ -75,9 +69,7 @@ class LoginRequestDtoTest {
     @DisplayName("비밀번호 실패")
     void passwordFailure_Blank(String password) {
       // given
-      LoginRequestDto loginRequestDto = new LoginRequestDto();
-      ReflectionTestUtils.setField(loginRequestDto, "email", validEmail);
-      ReflectionTestUtils.setField(loginRequestDto, "password", password);
+      LoginRequestDto loginRequestDto = new LoginRequestDto(VALID_EMAIL, password);
 
       // when
       Set<ConstraintViolation<LoginRequestDto>> violations = validator.validate(loginRequestDto);

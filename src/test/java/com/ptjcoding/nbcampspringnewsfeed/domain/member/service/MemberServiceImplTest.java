@@ -9,12 +9,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.FieldReflectionArbitraryIntrospector;
 import com.ptjcoding.nbcampspringnewsfeed.domain.blacklist.repository.BlackListRepositoryImpl;
-import com.ptjcoding.nbcampspringnewsfeed.domain.bookmark.repository.BookmarkRepositoryImpl;
-import com.ptjcoding.nbcampspringnewsfeed.domain.comment.repository.CommentRepositoryImpl;
-import com.ptjcoding.nbcampspringnewsfeed.domain.hall_of_fame.repository.HallOfFameRepositoryImpl;
+import com.ptjcoding.nbcampspringnewsfeed.domain.common.Test_Values;
 import com.ptjcoding.nbcampspringnewsfeed.domain.member.dto.LoginRequestDto;
 import com.ptjcoding.nbcampspringnewsfeed.domain.member.dto.NicknameUpdateRequestDto;
 import com.ptjcoding.nbcampspringnewsfeed.domain.member.dto.SignupRequestDto;
@@ -23,13 +19,9 @@ import com.ptjcoding.nbcampspringnewsfeed.domain.member.repository.MemberReposit
 import com.ptjcoding.nbcampspringnewsfeed.domain.member.repository.dto.NicknameUpdateDto;
 import com.ptjcoding.nbcampspringnewsfeed.domain.member.service.dto.MemberResponseDto;
 import com.ptjcoding.nbcampspringnewsfeed.domain.member.service.dto.NicknameChangeDto;
-import com.ptjcoding.nbcampspringnewsfeed.domain.post.repository.PostRepositoryImpl;
-import com.ptjcoding.nbcampspringnewsfeed.domain.vote.repository.VoteRepositoryImpl;
 import com.ptjcoding.nbcampspringnewsfeed.global.exception.CustomRuntimeException;
 import com.ptjcoding.nbcampspringnewsfeed.global.jwt.JwtProvider;
-import com.ptjcoding.nbcampspringnewsfeed.global.jwt.repository.TokenRepositoryImpl;
 import jdk.jfr.Description;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -42,41 +34,17 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
-class MemberServiceImplTest {
+class MemberServiceImplTest extends Test_Values {
 
   @Mock
   private MemberRepositoryImpl memberRepository;
   @Mock
-  private PostRepositoryImpl postRepository;
-  @Mock
-  private CommentRepositoryImpl commentRepository;
-  @Mock
-  private VoteRepositoryImpl voteRepository;
-  @Mock
-  private BookmarkRepositoryImpl bookmarkRepository;
-  @Mock
-  private HallOfFameRepositoryImpl hallOfFameRepository;
-  @Mock
   private BlackListRepositoryImpl blackListRepository;
-  @Mock
-  private TokenRepositoryImpl tokenRepository;
-
   @Mock
   private JwtProvider jwtProvider;
 
   @InjectMocks
   private MemberServiceImpl memberService;
-  private static FixtureMonkey sut;
-  private static final String validEmail = "email@example.com";
-  private static final String validPassword = "Password123";
-
-
-  @BeforeAll
-  static void beforeAll() {
-    sut = FixtureMonkey.builder()
-        .objectIntrospector(FieldReflectionArbitraryIntrospector.INSTANCE)
-        .build();
-  }
 
   @BeforeEach
   void setUp() {
@@ -92,11 +60,8 @@ class MemberServiceImplTest {
     @Test
     void signup() {
       // given
-      SignupRequestDto requestDto = sut.giveMeBuilder(SignupRequestDto.class)
-          .set("email", validEmail)
-          .set("password", validPassword)
-          .set("checkPassword", validPassword)
-          .sample();
+      SignupRequestDto requestDto = new SignupRequestDto(VALID_EMAIL, VALID_NICKNAME, VALID_PASSWORD, VALID_PASSWORD);
+
       // when
       MemberResponseDto responseDto = memberService.signup(requestDto);
 
@@ -107,22 +72,18 @@ class MemberServiceImplTest {
 
     @Test
     void login() {
-      // Mockito BDDMockito
-
       // given
       MockHttpServletResponse response = new MockHttpServletResponse();
-      LoginRequestDto requestDto = sut.giveMeBuilder(LoginRequestDto.class)
-          .set("email", validEmail)
-          .set("password", validPassword)
-          .sample();
+      LoginRequestDto requestDto = new LoginRequestDto(VALID_EMAIL, VALID_PASSWORD);
 
       given(blackListRepository.checkEmail(requestDto.getEmail())).willReturn(false);
       given(memberRepository.checkEmail(requestDto.getEmail())).willReturn(true);
+      given(memberRepository.checkPassword(requestDto)).willReturn(VALID_MEMBER);
 
       String accessToken = "I am a valid access token";
       String refreshToken = "I am a valid refresh token";
-      given(jwtProvider.generateAccessToken(1L, USER.getAuthority())).willReturn(accessToken);
-      given(jwtProvider.generateRefreshToken(1L, USER.getAuthority())).willReturn(refreshToken);
+      given(jwtProvider.generateAccessToken(VALID_ID, USER.getAuthority())).willReturn(accessToken);
+      given(jwtProvider.generateRefreshToken(VALID_ID, USER.getAuthority())).willReturn(refreshToken);
 
       // when
       memberService.login(requestDto, response);
@@ -135,8 +96,8 @@ class MemberServiceImplTest {
     @Test
     void updateMemberName() {
       // given
-      Member member = sut.giveMeOne(Member.class);
-      NicknameUpdateRequestDto requestDto = sut.giveMeOne(NicknameUpdateRequestDto.class);
+      Member member = VALID_MEMBER;
+      NicknameUpdateRequestDto requestDto = new NicknameUpdateRequestDto(VALID_NICKNAME + "2");
 
       Member changeMember = Member.builder().nickname(requestDto.getNickname()).build();
       given(memberRepository.updateMember(eq(member.getId()), any(NicknameUpdateDto.class))).willReturn(changeMember);
@@ -161,13 +122,9 @@ class MemberServiceImplTest {
       @Description("Signup: 이메일 중복")
       void signup() {
         // given
-        SignupRequestDto requestDto = sut.giveMeBuilder(SignupRequestDto.class)
-            .set("email", validEmail)
-            .set("password", validPassword)
-            .set("checkPassword", validPassword)
-            .sample();
+        SignupRequestDto requestDto = new SignupRequestDto(VALID_EMAIL, VALID_NICKNAME, VALID_PASSWORD, VALID_PASSWORD);
 
-        given(memberRepository.checkEmail(validEmail)).willReturn(true);
+        given(memberRepository.checkEmail(VALID_EMAIL)).willReturn(true);
 
         // when - then
         assertThrows(CustomRuntimeException.class, () -> memberService.signup(requestDto));
@@ -180,16 +137,26 @@ class MemberServiceImplTest {
 
       @Test
       @Description("블랙리스트에 등록된 이메일")
-      void login() {
+      void login_fail_blacklistedEmail() {
         // given
         MockHttpServletResponse response = new MockHttpServletResponse();
-        LoginRequestDto requestDto = sut.giveMeBuilder(LoginRequestDto.class)
-            .set("email", validEmail)
-            .set("password", validPassword)
-            .sample();
+        LoginRequestDto requestDto = new LoginRequestDto(VALID_EMAIL, VALID_PASSWORD);
 
-        given(blackListRepository.checkEmail(validEmail)).willReturn(true);
-        given(memberRepository.checkEmail(validEmail)).willReturn(true);
+        given(blackListRepository.checkEmail(VALID_EMAIL)).willReturn(true);
+
+        // when - then
+        assertThrows(CustomRuntimeException.class, () -> memberService.login(requestDto, response));
+      }
+
+      @Test
+      @Description("없는 이메일")
+      void login_fail_NotExistingEmail() {
+        // given
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        LoginRequestDto requestDto = new LoginRequestDto(VALID_EMAIL, VALID_PASSWORD);
+
+        given(blackListRepository.checkEmail(VALID_EMAIL)).willReturn(true);
+
         // when - then
         assertThrows(CustomRuntimeException.class, () -> memberService.login(requestDto, response));
       }
