@@ -31,7 +31,7 @@ dependencies {
 
     // Database
     runtimeOnly 'com.mysql:mysql-connector-j:'
-    runtimeOnly 'com.h2database:h2:2.2.224'
+    testRuntimeOnly 'com.h2database:h2:2.2.224'
 
     // Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -58,7 +58,7 @@ dependencies {
 
     // Fixture Monkey
     testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.13'
-    testImplementation("com.navercorp.fixturemonkey:fixture-monkey-jakarta-validation:1.0.0")
+    testImplementation("com.navercorp.fixturemonkey:fixture-monkey-jakarta-validation:1.0.13")
 
 }
 
@@ -81,13 +81,11 @@ jacoco {
             xml.setRequired false
             csv.setRequired false
 
-            // 리포트의 저장 경로를 설정합니다.
             html.destination file("jacoco/jacoco.html")
         }
     }
 
     jacocoTestCoverageVerification {
-        // 커버리지의 범위와 퍼센테이지를 설정합니다.
         violationRules {
             rule {
                 element = 'CLASS'
