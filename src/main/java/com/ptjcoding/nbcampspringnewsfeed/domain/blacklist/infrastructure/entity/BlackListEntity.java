@@ -41,4 +41,5 @@ public class BlackListEntity {
         .email(email)
         .build();
   }
+
 }

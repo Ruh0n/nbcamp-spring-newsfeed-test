@@ -7,4 +7,5 @@ public interface BlackListRepository {
   void deregister(String email);
 
   boolean checkEmail(String email);
+
 }

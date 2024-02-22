@@ -54,4 +54,5 @@ public class BookmarkRepositoryImpl implements BookmarkRepository {
   public void deleteBookmarksByMemberId(Long memberId) {
     bookmarkJpaRepository.deleteByMemberId(memberId);
   }
+
 }

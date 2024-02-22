@@ -60,4 +60,5 @@ public class PostResponseDto {
         .deletedDate(post.getDeletedDate())
         .build();
   }
+
 }

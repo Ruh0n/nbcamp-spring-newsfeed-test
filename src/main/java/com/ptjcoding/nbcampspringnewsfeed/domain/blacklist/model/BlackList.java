@@ -13,4 +13,5 @@ public class BlackList {
 
   private Long id;
   private String email;
+
 }

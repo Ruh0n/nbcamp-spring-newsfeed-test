@@ -3,11 +3,15 @@ package com.ptjcoding.nbcampspringnewsfeed.domain.member.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SignupRequestDto {
 
   @NotBlank
@@ -32,4 +36,5 @@ public class SignupRequestDto {
   @Pattern(regexp = "^(?=.*[a-z]).+$")
   @Pattern(regexp = "^(?=.*[A-Z]).+$")
   private String checkPassword;
+
 }

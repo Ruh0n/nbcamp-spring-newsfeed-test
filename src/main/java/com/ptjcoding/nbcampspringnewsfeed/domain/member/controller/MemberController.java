@@ -50,7 +50,7 @@ public class MemberController {
 
   @PostMapping("/logout")
   public ResponseEntity<CommonResponseDto<Void>> logout(
-          @RequestAttribute("member") Member member,
+      @RequestAttribute("member") Member member,
       HttpServletRequest request
   ) {
     memberService.logout(request, member);
@@ -83,4 +83,5 @@ public class MemberController {
 
     return CommonResponseDto.ok(GlobalSuccessCode.UPDATE, responseDto);
   }
+
 }

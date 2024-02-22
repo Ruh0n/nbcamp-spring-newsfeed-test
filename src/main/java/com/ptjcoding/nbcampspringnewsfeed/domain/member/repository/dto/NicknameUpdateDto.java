@@ -9,7 +9,9 @@ import lombok.Getter;
 public class NicknameUpdateDto {
 
   private String nickname;
+
   public static NicknameUpdateDto of(NicknameUpdateRequestDto dto) {
     return new NicknameUpdateDto(dto.getNickname());
   }
+
 }

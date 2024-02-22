@@ -107,8 +107,10 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public NicknameChangeDto updateMemberName(Member member,
-      NicknameUpdateRequestDto dto) {
+  public NicknameChangeDto updateMemberName(
+      Member member,
+      NicknameUpdateRequestDto dto
+  ) {
     Member changeMember = memberRepository.updateMember(member.getId(),
         NicknameUpdateDto.of(dto));
     return NicknameChangeDto.of(member.getNickname(), changeMember.getNickname());
@@ -135,4 +137,5 @@ public class MemberServiceImpl implements MemberService {
 
     postRepository.deletePostsByMemberId(memberId);
   }
+
 }

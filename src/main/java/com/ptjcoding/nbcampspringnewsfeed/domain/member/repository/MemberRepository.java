@@ -18,4 +18,5 @@ public interface MemberRepository {
   Member checkPassword(LoginRequestDto dto);
 
   Member findMemberOrElseThrow(Long id);
+
 }

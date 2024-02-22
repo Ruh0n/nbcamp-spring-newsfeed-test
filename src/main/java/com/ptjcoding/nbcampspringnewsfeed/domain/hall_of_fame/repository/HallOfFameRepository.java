@@ -11,4 +11,5 @@ public interface HallOfFameRepository {
   void updateTable(Long postId, Long voteCount);
 
   void deleteHallOfFame(Long postId);
+
 }

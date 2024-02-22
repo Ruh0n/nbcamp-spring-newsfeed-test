@@ -29,7 +29,7 @@ public class BlackListController {
       @RequestAttribute("member") Member member,
       @Validated @RequestBody BlackListRequestDto dto
   ) {
-    if(member.isRole(MemberRole.USER)) {
+    if (member.isRole(MemberRole.USER)) {
       return CommonResponseDto.badRequest(GlobalErrorCode.UNAUTHORIZED.getMessage());
     }
 
@@ -42,11 +42,12 @@ public class BlackListController {
       @RequestAttribute("member") Member member,
       @Validated @RequestBody BlackListRequestDto dto
   ) {
-    if(member.isRole(MemberRole.USER)) {
+    if (member.isRole(MemberRole.USER)) {
       return CommonResponseDto.badRequest(GlobalErrorCode.UNAUTHORIZED.getMessage());
     }
 
     blackListService.deregister(dto);
     return CommonResponseDto.ok(GlobalSuccessCode.DELETE, dto.getEmail());
   }
+
 }

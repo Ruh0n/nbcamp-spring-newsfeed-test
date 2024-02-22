@@ -1,6 +1,5 @@
 package com.ptjcoding.nbcampspringnewsfeed.domain.comment.repository.dto;
 
-import com.ptjcoding.nbcampspringnewsfeed.domain.comment.dto.CommentCreateRequestDto;
 import com.ptjcoding.nbcampspringnewsfeed.domain.comment.dto.CommentUpdateRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

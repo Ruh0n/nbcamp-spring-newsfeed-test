@@ -10,29 +10,31 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class TokenRepositoryImpl implements TokenRepository {
-    private final RefreshTokenJpaRepository refreshTokenJpaRepository;
 
-    @Override
-    public void register(Long memberId, String token) {
-        RefreshTokenEntity entity = RefreshTokenEntity.of(memberId, token);
-        refreshTokenJpaRepository.save(entity);
-    }
+  private final RefreshTokenJpaRepository refreshTokenJpaRepository;
 
-    @Override
-    public Long findMemberIdByToken(String token) {
-        RefreshTokenEntity entity = refreshTokenJpaRepository.findByToken(token)
-                .orElseThrow(() ->
-                        new CustomJwtException(JwtErrorCode.INVALID_TOKEN_EXCEPTION));
-        return entity.getMemberId();
-    }
+  @Override
+  public void register(Long memberId, String token) {
+    RefreshTokenEntity entity = RefreshTokenEntity.of(memberId, token);
+    refreshTokenJpaRepository.save(entity);
+  }
 
-    @Override
-    public void deleteByMemberId(Long memberId) {
-        refreshTokenJpaRepository.deleteByMemberId(memberId);
-    }
+  @Override
+  public Long findMemberIdByToken(String token) {
+    RefreshTokenEntity entity = refreshTokenJpaRepository.findByToken(token)
+        .orElseThrow(() ->
+            new CustomJwtException(JwtErrorCode.INVALID_TOKEN_EXCEPTION));
+    return entity.getMemberId();
+  }
 
-    @Override
-    public void deleteToken(String token) {
-        refreshTokenJpaRepository.deleteByToken(token);
-    }
+  @Override
+  public void deleteByMemberId(Long memberId) {
+    refreshTokenJpaRepository.deleteByMemberId(memberId);
+  }
+
+  @Override
+  public void deleteToken(String token) {
+    refreshTokenJpaRepository.deleteByToken(token);
+  }
+
 }

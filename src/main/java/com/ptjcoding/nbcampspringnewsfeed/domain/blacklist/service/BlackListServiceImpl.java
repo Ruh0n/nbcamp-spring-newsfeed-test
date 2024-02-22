@@ -22,4 +22,5 @@ public class BlackListServiceImpl implements BlackListService {
   public void deregister(BlackListRequestDto dto) {
     blackListRepository.deregister(dto.getEmail());
   }
+
 }

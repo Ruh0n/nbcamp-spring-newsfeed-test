@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
 }
@@ -28,8 +29,9 @@ dependencies {
     // JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    // MySql
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    // Database
+    runtimeOnly 'com.mysql:mysql-connector-j:'
+    testRuntimeOnly 'com.h2database:h2:2.2.224'
 
     // Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -40,7 +42,7 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
     // Lombok
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     // Validation
@@ -49,12 +51,51 @@ dependencies {
     // Springdoc - Swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
+
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // Fixture Monkey
+    testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.13'
+    testImplementation("com.navercorp.fixturemonkey:fixture-monkey-jakarta-validation:1.0.13")
 
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.register('testAndReportWithJacoco') {
+    group = 'verification'
+
+    dependsOn test
+    finalizedBy jacocoTestReport
+}
+
+
+jacoco {
+    jacocoTestReport {
+        reports {
+            html.setRequired true
+            xml.setRequired false
+            csv.setRequired false
+
+            html.destination file("jacoco/jacoco.html")
+        }
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                element = 'CLASS'
+
+                limit {
+                    counter = 'BRANCH'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.90
+                }
+            }
+        }
+    }
 }

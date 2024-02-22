@@ -31,4 +31,5 @@ public interface PostRepository {
   void downDisagreeCount(Long postId);
 
   PostEntity findPostEntityorElseThrow(Long postId);
+
 }

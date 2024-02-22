@@ -48,4 +48,5 @@ public class BookmarkController {
     bookmarkService.deleteBookmark(postId, member.getId());
     return CommonResponseDto.ok(GlobalSuccessCode.DELETE, null);
   }
+
 }

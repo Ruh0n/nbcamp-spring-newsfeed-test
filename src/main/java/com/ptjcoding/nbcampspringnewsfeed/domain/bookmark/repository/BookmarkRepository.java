@@ -19,4 +19,5 @@ public interface BookmarkRepository {
   void deleteBookmarksByPostId(Long postId);
 
   void deleteBookmarksByMemberId(Long memberId);
+
 }

@@ -16,4 +16,5 @@ public class NicknameChangeDto {
         .afterName(afterName)
         .build();
   }
+
 }
